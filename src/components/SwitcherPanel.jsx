@@ -6,7 +6,15 @@ const SwitcherPanel = () => {
         id='switcherPanelContainer'
         className='switcher-panel-container'
         >
-            <p>asfd!!</p>
+           <button>This button does nothing.</button>
+           <button>Nor does this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
+           <button>Or this one.</button>
         </div>
     )
 }

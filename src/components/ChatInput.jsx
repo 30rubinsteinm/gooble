@@ -23,7 +23,7 @@ const ChatInput = forwardRef(({onSend}, ref) => {
 
     useEffect (() => {
         const handleKeyDown = (event) => {
-            const otherKeys = ['Shift', 'CapsLock', 'ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Tab', 'Escape', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Home', 'End', 'PageUp', 'PageDown', 'Insert']
+            const otherKeys = ['Shift', 'CapsLock', 'ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Tab', 'Escape', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'Home', 'End', 'PageUp', 'PageDown', 'Insert', ' ']
             if (event.altKey || event.ctrlKey || event.metaKey || otherKeys.includes(event.key)) return;
             if(document.activeElement !== inputRef.current) {
                 inputRef.current.focus();
@@ -33,9 +33,7 @@ const ChatInput = forwardRef(({onSend}, ref) => {
 
         document.addEventListener('keydown', handleKeyDown)
 
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown)
-        };
+        return () => { document.removeEventListener('keydown', handleKeyDown) };
     }, []);
 
     const onKeyDown = (event) => {

@@ -1,9 +1,9 @@
 import '../App.css';
 
-const MessageObject = ({displayName, time, content, profilePicture, showAvatar}) => {
+const MessageObject = ({displayName, time, content, profilePicture, showAvatar, showSpacer}) => {
   return (
     <div
-    className='chat-message-container'>
+      className={showSpacer ? 'chat-message-container-spaced' : 'chat-message-container'}>
         {showAvatar ? <img src={profilePicture} alt="Profile Picture" className="chat-message-profile-picture"/> : <></>}
         {showAvatar ? <p className='chat-message-display-name'>{displayName}</p> : <></>}
         {showAvatar ? <p className='chat-message-time'>{time}</p> : <></>}

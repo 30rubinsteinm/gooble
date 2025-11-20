@@ -4,7 +4,7 @@ const ChatSendButton = ({onSend}) => {
     return (
         <button
         id='sendButton'
-        className='chat-button'
+        className='chat-send-button'
         onClick={onSend}
         >
         ↑

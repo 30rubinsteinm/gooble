@@ -2,11 +2,76 @@
   --primary-color: rgb(81, 104, 54);
   --secondary-color: rgb(144, 151, 84);
   --bg-color: rgb(48, 52, 47);
-  background-color: var(--bg-color);
+  --text-color: white
+  /* background-color: var(--bg-color); */
 }
 
 body {
-  color: #ffffff;
+  color: var(--text-color)
+}
+
+::placeholder {
+  color: var(--secondary-color)
+}
+
+button, input {
+  color: var(--text-color);
+  -webkit-appearance: none;
+  appearance: none;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+/* Style the entire scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust as needed */
+  height: 10px; /* Adjust as needed for horizontal scrollbars */
+}
+
+/* Style the scrollbar track (the background) */
+::-webkit-scrollbar-track {
+  background:rgb(48, 52, 47);
+  border-radius: 10px; /* Adjust to match your container's rounding */
+}
+
+/* Style the scrollbar thumb (the draggable handle) */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color); /* Darker gray thumb */
+  border-radius: 10px; /* Adjust to match your container's rounding and track */
+}
+
+/* Style the thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  box-shadow: 0px 0px 0px var(--secondary-color);
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+input:focus,
+input:focus-visible,
+button:focus,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0px 0px 10px var(--secondary-color);
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+input:hover,
+button:hover {
+  box-shadow: 0px 0px 10px var(--secondary-color);
+  transition: box-shadow 0.25s ease-in-out;
+}
+
+input:active,
+button:active {
+  box-shadow: 0px 0px 5px var(--secondary-color);
+  transition: box-shadow 0.25s ease-in-out;
 }
 
 .wrapper {
@@ -25,12 +90,12 @@ body {
 }
 
 .switcher-panel-container {
-  border-color: black;
+  border-color: var(--secondary-color);
+  background-color: var(--bg-color);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
   padding: 1em;
-  overflow-y: scroll;
 
   grid-column: 1;
   grid-row: 1;
@@ -38,12 +103,19 @@ body {
   width: 95%;
   
   word-break: break-word;
-  overflow:hidden;
   border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  place-items: center;
+  overflow: auto;
+  gap: 25px;
 }
 
 .chat-window {
-  border-color: black;
+  border-color: var(--secondary-color);
+  background-color: var(--bg-color);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -53,6 +125,7 @@ body {
 
   grid-column-start: 2;
   grid-column-end: 4;
+  grid-row: 1;
 
   width: 95%;
   height: 95%;
@@ -79,12 +152,6 @@ body {
   transition: box-shadow 0.25s ease-in-out;
 }
 
-.chat-input:focus {
-  outline: none;
-  box-shadow: 0px 0px 10px var(--secondary-color);
-  transition: box-shadow 0.25s ease-in-out;
-}
-
 .chat-extras-button {
   font-size: 1rem;
   padding: 1em;
@@ -99,7 +166,7 @@ body {
   background-color: var(--primary-color);
 }
 
-.chat-button {
+.chat-send-button {
   font-size: 1rem;
   padding: 1em;
 
@@ -113,20 +180,24 @@ body {
   background-color: var(--primary-color);
 }
 
-.chat-message-container {
+.chat-message-container,
+.chat-message-container-spaced {
   display: grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 10px;
-  justify-items: center;
-  align-items: start;
-  width: 300px;
+  max-width: 90%;
+  width: max-content;
+  grid-auto-columns: auto;
+  grid-auto-rows: max-content;
+  column-gap: 10px;
+}
+
+.chat-message-container-spaced {
+  margin-top: 25px;
 }
 
 .chat-message-profile-picture {
   margin: 0;
   width: 50px;
   height: 50px;
-  justify-self: end;
   background-color: gray;
   aspect-ratio: 1/1;
   border-radius: 100%;
@@ -151,23 +222,23 @@ body {
   grid-row: 1;
   grid-column: 3;
   align-self: center;
-  justify-self: start;
   font-style: italic;
 }
 
 .chat-message-content {
-  width: 100%;
+  /* width: 100%; */
   margin: 0;
   grid-row: 2;
-  grid-column: 2;
+  grid-column: 2 / span 3;
+  word-wrap: break-word;
   font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 }
 
 .chat-message-content-no-avatar {
   width: 100%;
   margin: 0;
-  grid-row: 2;
-  grid-column: 2;
-  margin-left: 100px;
+  padding-left: 60px;
+  grid-row: 1;
+  grid-column: 1;
   font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
 }

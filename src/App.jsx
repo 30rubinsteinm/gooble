@@ -10,6 +10,7 @@ import createChatObject from './utils/ChatMessageObject';
 const App = () => {
   let [ messages, setMessages ] = useState([])
   const chatInputRef = useRef(null);
+  const chatWindowRef = useRef(null);
 
   const addNewInput = (newMessage) => {
         if (messages.length < 200)
@@ -25,15 +26,17 @@ const App = () => {
 
   const handleMessageSent = () => {
     const contentText = chatInputRef.current.getInputValueToSend();
+    chatWindowRef.current.scrollToBottom();
     if (contentText.trim() != '') {
       const tempProfilePic = "https://picsum.photos/512/512";
+      chatWindowRef.current.scrollToBottom();
       addNewInput(createChatObject('John Smith', 0, tempProfilePic, contentText))
     }
   }
 
   return (
     <div className='wrapper'>
-      <ChatWindow messages={messages}></ChatWindow>
+      <ChatWindow messages={messages} ref={chatWindowRef}></ChatWindow>
       <ChatExtrasButton></ChatExtrasButton>
       <ChatInput onSend={handleMessageSent} ref={chatInputRef}></ChatInput>
       <ChatSendButton onSend={handleMessageSent}></ChatSendButton>
