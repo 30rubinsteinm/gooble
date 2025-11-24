@@ -4,7 +4,7 @@ const createChatObject = ({newUserDisplayName, newUserID, newUserProfilePicture,
     : {
         newUserDisplayName: string,
         newUserID: number,
-        newUserProfilePicture: string,
+        newUserProfilePicture: string | null,
         newUserContent: string
     }
 ) => {

@@ -1,15 +1,13 @@
 import UserProfile from "../types/UserProfileObject";
 
-const createProfileObject = ({newUserDisplayName, newUserID, newUserProfilePicture}
+const createProfileObject = ({newUserDisplayName, newUserProfilePicture}
     : {
         newUserDisplayName: string,
-        newUserID: number,
         newUserProfilePicture: string
     }
 ) => {
     let inputObject = {
         userDisplayName: newUserDisplayName,
-        userID: newUserID,
         userProfilePicture: newUserProfilePicture,
     } as UserProfile
 

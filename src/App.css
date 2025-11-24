@@ -29,7 +29,7 @@
   flex-direction: column;
   align-items: center;
   place-items: center;
-  overflow: scroll;
+  overflow-y: scroll;
   gap: 25px;
 }
 

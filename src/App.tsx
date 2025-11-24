@@ -1,10 +1,11 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import ChatInput from './components/ChatInput';
 import ChatUsersPanel from './components/ChatUsersPanel';
 import ChatWindow from './components/ChatWindow';
 import ProfileTopBar from './components/ProfileTopBar';
 import SwitcherPanel from './components/SwitcherPanel';
+import { socket } from './socket';
 import ChatInputRef from './types/ChatInputRef';
 import ChatMessageObject from './types/ChatMessageObject';
 import ChatWindowRef from './types/ChatWindowRef';
@@ -12,44 +13,84 @@ import createChatObject from './utils/ChatMessageCreator';
 import createProfileObject from './utils/UserProfileCreator';
 
 const App = () => {
-  let [ messages, setMessages ] = useState<ChatMessageObject[]>([]);
+  const [ messages, setMessages ] = useState<ChatMessageObject[]>([]);
   const chatInputRef = useRef<ChatInputRef>(null);
   const chatWindowRef = useRef<ChatWindowRef>(null);
-  const userProfilePicture = 'https://picsum.photos/512'
+  const [ userProfilePicture, setUserProfilePicture] = useState<string>();
+  const [clientUserID, setClientUserID] = useState<number | null>(null);
   
+  const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
+
+  useEffect(() => {
+    function onConnect() {
+      console.log("connected!")
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    function clientReceiveMessage(value: ChatMessageObject) {
+      addNewInput(value);
+    }
+
+    function clientReceiveUserID(value: number) {
+      setClientUserID(value);
+      setUserProfilePicture('https://picsum.photos/seed/' + value + '/512')
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+    socket.on('client receive message', clientReceiveMessage);
+    socket.on('get user id', clientReceiveUserID)
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+      socket.off('client receive message', clientReceiveMessage);
+    };
+  }, []);
+
+  useEffect(() => {
+  }, [messages])
+
   const addNewInput = (newMessage: ChatMessageObject) => {
-    if (messages.length < 200) // Make sure the number of messages isn't to high, to save performance
-    {
-      setMessages(messages.concat(newMessage));
-    }
-    else // If it is, then just delete the most recent one
-    {
-      let newMessages = messages.slice(1); // Why javascript do you have to be so random?? This is the best way I could find to delete the first (oldest) element
-      setMessages(newMessages.concat(newMessage));
-    }
+    newMessage.messageTime = new Date(newMessage.messageTime) // Websockets can't accept Dates, so they turn them into strings. This turns it back
+    setMessages(prevMessage => prevMessage.length < 50 ?
+      prevMessage.concat(newMessage) :
+      prevMessage.slice(1).concat(newMessage)
+    )
   }
 
   const handleMessageSent = () => {
     if (!chatInputRef.current) return;
+    if (!clientUserID) return;
     const contentText: string = chatInputRef.current.getInputValueToSend();
     if (contentText.trim() != '') { // Make sure the content isn't blank!
-      addNewInput(createChatObject({
+      let message: ChatMessageObject = createChatObject({
         newUserDisplayName: 'John Doe',
-        newUserID: 0,
+        newUserID: clientUserID,
         newUserProfilePicture: userProfilePicture,
         newUserContent: contentText
-      }));
-
+      })
+      socket.emit("message sent", message)
       if (!chatWindowRef.current) return;
-      chatWindowRef.current.scrollToBottom();
     }
   }
+
+  useEffect(() => {
+    if (!chatWindowRef.current) return;
+    if (messages.length == 0) return;
+    if (messages[messages.length - 1].userID == clientUserID) {
+    chatWindowRef.current.scrollToBottom();
+    }
+  }, [messages])
 
   return (
     <div className='wrapper'>
       <ProfileTopBar profile={createProfileObject({
         newUserDisplayName: 'John Doe',
-        newUserID: 0,
         newUserProfilePicture: userProfilePicture
       })}></ProfileTopBar>
       <SwitcherPanel></SwitcherPanel>
