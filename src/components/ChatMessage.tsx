@@ -1,6 +1,16 @@
 import '../App.css';
-
-const MessageObject = ({displayName, time, content, profilePicture, showAvatar, showSpacer}) => {
+import './ChatMessage.css';
+// Is this the worst code i've ever written? I would care but if it works it works
+const MessageDisplay = ({displayName, time, content, profilePicture, showAvatar, showSpacer}
+  : {
+    displayName: string,
+    time: string,
+    content: string,
+    profilePicture: string,
+    showAvatar: boolean,
+    showSpacer: boolean
+  }
+) => {
   return (
     <div
       className={showSpacer ? 'chat-message-container-spaced' : 'chat-message-container'}>
@@ -12,4 +22,4 @@ const MessageObject = ({displayName, time, content, profilePicture, showAvatar, 
   );
 };
 
-export default MessageObject;
+export default MessageDisplay;

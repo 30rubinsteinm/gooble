@@ -1,6 +1,7 @@
 import '../App.css';
+import UserProfileObject from '../types/UserProfileObject';
 
-const ProfileTopBar = ({profile}) => {
+const ProfileTopBar = ({profile}: {profile: UserProfileObject}) => {
     return (
         <div
         id='profileTopBar'

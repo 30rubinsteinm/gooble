@@ -1,15 +1,14 @@
 import '../App.css';
 
-const ChatSendButton = ({onSend}) => {
+const ChatExtrasButton = () => { // TODO: onExtras, open popup and stuff
     return (
         <button
-        id='sendButton'
+        id='extrasButton'
         className='chat-extras-button'
-        onClick={onSend}
         >
         +
         </button>
     )
 }
 
-export default ChatSendButton;
+export default ChatExtrasButton;
