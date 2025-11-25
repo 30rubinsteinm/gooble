@@ -17,7 +17,7 @@ const App = () => {
   const chatInputRef = useRef<ChatInputRef>(null);
   const chatWindowRef = useRef<ChatWindowRef>(null);
   const [ userProfilePicture, setUserProfilePicture] = useState<string | null>(null);
-  const [clientUserID, setClientUserID] = useState<number | null>(null);
+  const [clientUserID, setClientUserID] = useState<string>('0');
   
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
 
@@ -35,7 +35,7 @@ const App = () => {
       addNewInput(value);
     }
 
-    function clientReceiveUserID(value: number) {
+    function clientReceiveUserID(value: string) {
       setClientUserID(value);
       setUserProfilePicture('https://picsum.photos/seed/' + value + '/512')
     }

@@ -3,7 +3,7 @@ import ChatMessageObject from '../types/ChatMessageObject';
 const createChatObject = ({newUserDisplayName, newUserID, newUserProfilePicture, newUserContent}
     : {
         newUserDisplayName: string,
-        newUserID: number,
+        newUserID: string,
         newUserProfilePicture: string | null,
         newUserContent: string
     }
@@ -14,7 +14,7 @@ const createChatObject = ({newUserDisplayName, newUserID, newUserProfilePicture,
         userProfilePicture: newUserProfilePicture,
         userContent: newUserContent,
         messageTime: new Date(),
-        messageId: Date.now()
+        messageId: Date.now().toString() // TODO: Change
     } as ChatMessageObject;
 
     return inputObject;
