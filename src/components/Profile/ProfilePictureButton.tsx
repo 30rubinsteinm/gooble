@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "../App.css";
-import UserProfileObject from "../types/UserProfileObject";
+import "../../App.css";
+import UserProfileObject from "../../types/UserProfileObject";
 import ProfilePanel from "./ProfilePanel";
 
 const ProfilePictureButton = ({ profile }: { profile: UserProfileObject }) => {

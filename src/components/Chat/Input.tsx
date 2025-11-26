@@ -7,10 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
-import "../App.css";
-import ChatExtrasButton from "./ChatExtrasButton";
-import "./ChatInput.css";
-import ChatSendButton from "./ChatSendButton";
+import "../../App.css";
+import ChatExtrasButton from "./ExtrasButton";
+import "./Input.css";
+import ChatSendButton from "./SendButton";
 
 const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
   // Wrap the component with forwardRef so the parent can pass a ref;  useImperativeHandle exposes methods to that ref
@@ -43,6 +43,23 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (document.activeElement) {
+        if (document.activeElement instanceof HTMLElement) {
+          let activeElement: HTMLElement = document.activeElement;
+          if (
+            activeElement instanceof HTMLInputElement ||
+            activeElement instanceof HTMLTextAreaElement ||
+            activeElement.isContentEditable
+          ) {
+            if (
+              document.activeElement.parentElement?.parentElement?.id !=
+              "chatInputForm"
+            )
+              return; // Don't refocus if something like an input is already focused!
+          }
+        }
+      }
+
       if (event.key == "Enter" && !event.shiftKey) {
         if (textAreaRef.current) {
           onSubmit(event);
@@ -51,6 +68,7 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
         event.preventDefault(); // Prevent the default beheivor of stuff (textarea, form, etc). In this case its for textarea
         return;
       }
+
       // This will focus the input box any time any character is pressed, as long as it's a valid character.
       const otherKeys = [
         "Shift",
@@ -85,11 +103,14 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
         event.ctrlKey ||
         event.metaKey ||
         otherKeys.includes(event.key)
-      )
+      ) {
         return; // Don't refocus if it's not a valid character
+      }
+
       if (document.activeElement !== textAreaRef.current) {
-        // Only refocus if it's not already focused
-        if (!textAreaRef.current) return; // Typescript thing to ensure safety, otherwise error. Just makes sure inputRef is not null
+        if (!textAreaRef.current)
+          // Only refocus if it's not already focused
+          return; // Typescript thing to ensure safety, otherwise error. Just makes sure inputRef is not null
         textAreaRef.current.focus();
         textAreaRef.current.setSelectionRange(
           textAreaRef.current.selectionEnd,
@@ -115,7 +136,6 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
       <ChatExtrasButton></ChatExtrasButton>
       <span className="chat-input-div" role="textbox">
         <textarea
-          contentEditable="true"
           className="chat-input"
           id="chatInput"
           placeholder="Type here..."

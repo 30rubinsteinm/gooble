@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>GoobApp</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' http://localhost:3000 ws://localhost:3000 https://goobapp-backend.koyeb.app wss://goobapp-backend.koyeb.app; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; object-src 'none'; base-uri 'self';"
+    />
+    <link href="/style.css" rel="stylesheet" />
     <link
       rel="icon"
       type="image/png"
@@ -16,9 +24,6 @@
     />
     <meta name="apple-mobile-web-app-title" content="GoobApp" />
     <link rel="manifest" href="favicon/site.webmanifest" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goobapp</title>
   </head>
   <body>
     <div id="root"></div>
