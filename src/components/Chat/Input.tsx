@@ -17,6 +17,7 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
   const textAreaRef = useRef<HTMLParagraphElement>(null);
   const [textAreaValue, setTextAreaValue] = useState(""); // useState is used to make React update stuff on the screen when something changes
   const [isInputBlank, setIsInputBlank] = useState(true);
+  const maxLength: number = 1001;
 
   const onChange = (event: ChangeEvent<HTMLParagraphElement>) => {
     setIsInputBlank(event.target.textContent == "");
@@ -25,7 +26,7 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
 
   const onSubmit = (event: FormEvent | KeyboardEvent) => {
     event.preventDefault();
-    if (textAreaValue.length <= 1001) {
+    if (textAreaValue.length <= maxLength) {
       if (!isInputBlank) {
         onSend(); // This will send the onSend function up to the parent
       }
@@ -153,10 +154,13 @@ const ChatInput = forwardRef(({ onSend }: { onSend: () => void }, ref) => {
         </div>
         {isInputBlank && <p className="chat-input-placeholder">Type here...</p>}
         <p className="chat-input-char-limit">
-          {isInputBlank ? 0 : textAreaValue.length}/1001
+          {isInputBlank ? 0 : textAreaValue.length}/{maxLength}
         </p>
       </div>
-      <ChatSendButton onSend={onSend}></ChatSendButton>
+      <ChatSendButton
+        onSend={onSend}
+        disabled={textAreaValue.length > maxLength}
+      ></ChatSendButton>
     </form>
   );
 });

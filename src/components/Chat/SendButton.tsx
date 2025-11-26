@@ -1,8 +1,19 @@
 import "../../App.css";
 
-const ChatSendButton = ({ onSend }: { onSend: () => void }) => {
+const ChatSendButton = ({
+  onSend,
+  disabled,
+}: {
+  onSend: () => void;
+  disabled: boolean;
+}) => {
   return (
-    <button id="sendButton" className="chat-send-button" onClick={onSend}>
+    <button
+      id="sendButton"
+      className="chat-send-button"
+      onClick={onSend}
+      disabled={disabled}
+    >
       ↑
     </button>
   );
