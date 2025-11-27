@@ -60,7 +60,7 @@ body {
   border-style: solid;
   font-size: 1rem;
   padding: 1em;
-  /* overflow-y: scroll; */
+  overflow-y: auto;
   word-break: break-word;
 
   grid-column-start: 2;
