@@ -1,6 +1,7 @@
 // Modified from tutorial: https://mobisoftinfotech.com/resources/blog/app-development/supabase-react-typescript-tutorial
 
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { Provider } from "@supabase/supabase-js";
 import { FormEvent, useRef, useState } from "react";
 import "../../App.css";
 import { Client } from "../supabase/Client";
@@ -36,13 +37,13 @@ const LoginPanel = () => {
     }
   };
 
-  const handleSignInWithGoogle = async () => {
+  const handleSignInWithProvider = async (provider: Provider) => {
     try {
       setError(null);
       setLogInLoading(true);
 
       const { data, error } = await Client.auth.signInWithOAuth({
-        provider: "google",
+        provider: provider,
       });
 
       if (error) throw error;
@@ -87,8 +88,11 @@ const LoginPanel = () => {
       >
         {logInLoading ? "Loading..." : "Sign In"}
       </button>
-      <button type="button" onClick={handleSignInWithGoogle}>
+      <button type="button" onClick={() => handleSignInWithProvider("google")}>
         Sign in with Google
+      </button>
+      <button type="button" onClick={() => handleSignInWithProvider("github")}>
+        Sign in with GitHub
       </button>
       {error && <div className="error-message">{error}</div>}
     </form>
