@@ -1,6 +1,6 @@
 .chat-input-form {
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 4;
   grid-row: 3;
   gap: 25px;
   display: flex;
@@ -46,6 +46,7 @@
   resize: none;
 
   scrollbar-width: none;
+
   overflow-y: auto;
   overflow-wrap: anywhere;
 

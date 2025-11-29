@@ -69,3 +69,15 @@ body {
 
   grid-row: 2;
 }
+
+@media screen and (max-width: 1000px) {
+  .chat-users-panel-container,
+  .switcher-panel-container {
+    display: none;
+    pointer-events: none;
+  }
+
+  .chat-window {
+    grid-column: 1 / span 3;
+  }
+}
