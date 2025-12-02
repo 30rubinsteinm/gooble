@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router";
-import "../App.css";
+import "../../App.css";
+import "./GamesList.css";
+
 const GamesList = () => {
   const navigate = useNavigate();
 

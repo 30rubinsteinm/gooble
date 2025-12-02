@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { createHashRouter, RouterProvider } from "react-router";
 import "./App.css";
 import ChatWindow from "./components/Chat/Window";
-import GamesList from "./components/GamesList";
 import Layout from "./components/Layout";
+import GamesList from "./components/Pages/GamesList";
+import SettingsPage from "./components/Pages/SettingsPage";
 import { Client } from "./components/supabase/Client";
 import { socket } from "./socket";
 import ChatMessageObject from "./types/ChatMessageObject";
+import UserProfile from "./types/UserProfileObject";
 import createChatObject from "./utils/ChatMessageCreator";
 import createProfileObject from "./utils/UserProfileCreator";
 
@@ -120,6 +122,14 @@ const App = () => {
     setUsername(data.username);
     setUserProfilePicture(data.profile_image_url);
     setClientUserID(data.user_id);
+
+    setProfile(
+      createProfileObject({
+        newUserDisplayName: username,
+        newUserProfilePicture: userProfilePicture,
+        newUserUUID: session.user.id,
+      })
+    );
   };
 
   useEffect(() => {
@@ -146,18 +156,18 @@ const App = () => {
     };
   }, []);
 
+  const [profile, setProfile] = useState<UserProfile>(
+    createProfileObject({
+      newUserDisplayName: null,
+      newUserProfilePicture: null,
+      newUserUUID: null,
+    })
+  );
+
   const routes = [
     {
       path: "/",
-      element: (
-        <Layout
-          session={session}
-          profileObject={createProfileObject({
-            newUserDisplayName: username,
-            newUserProfilePicture: userProfilePicture,
-          })}
-        ></Layout>
-      ),
+      element: <Layout session={session} profileObject={profile}></Layout>,
       children: [
         {
           index: true,
@@ -168,6 +178,10 @@ const App = () => {
               clientUserID={clientUserID}
             ></ChatWindow>
           ),
+        },
+        {
+          path: "/settings/*",
+          element: <SettingsPage profile={profile}></SettingsPage>,
         },
         {
           path: "/games/*",

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import "../../App.css";
 import UserProfileObject from "../../types/UserProfileObject";
 import { Client } from "../supabase/Client";
@@ -7,8 +8,12 @@ import "./Profile.css";
 const ProfilePanel = ({ profile }: { profile: UserProfileObject }) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleSettings = () => {};
+  const handleSettings = () => {
+    navigate("/settings", { viewTransition: true });
+  };
+
   const handleLogOut = async () => {
     try {
       setError(null);
@@ -25,9 +30,7 @@ const ProfilePanel = ({ profile }: { profile: UserProfileObject }) => {
 
   return (
     <div className="profile-panel-div">
-      <p className="profile-panel-username">
-        Hello, {profile.userDisplayName}!
-      </p>
+      <p className="profile-panel-username">Hello, {profile.username}!</p>
       <img
         src={profile.userProfilePicture}
         className="profile-panel-profile-picture"
