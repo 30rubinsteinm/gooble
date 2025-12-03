@@ -8,7 +8,7 @@ import MessageDisplay from "./Message";
 type ChatWindowProps = {
   messages: ChatMessageObject[];
   sendMessage: (contentText: string) => void;
-  clientUserID: string;
+  clientUserUUID: string;
 };
 
 type ChatWindowRef = {
@@ -57,7 +57,7 @@ const ChatWindow = forwardRef<ChatWindowRef, ChatWindowProps>((props, ref) => {
   useEffect(() => {
     if (props.messages.length == 0) return;
     if (
-      props.messages[props.messages.length - 1].userID == props.clientUserID
+      props.messages[props.messages.length - 1].userUUID == props.clientUserUUID
     ) {
       scrollToBottom();
     }
@@ -87,7 +87,7 @@ const ChatWindow = forwardRef<ChatWindowRef, ChatWindowProps>((props, ref) => {
             showSpacer = false;
           } else {
             let prev = props.messages[index - 1];
-            if (prev.userID !== message.userID) {
+            if (prev.userUUID !== message.userUUID) {
               showAvatar = true;
               showSpacer = true;
             }
@@ -95,7 +95,7 @@ const ChatWindow = forwardRef<ChatWindowRef, ChatWindowProps>((props, ref) => {
 
           return (
             <MessageDisplay
-              userID={message.userID}
+              userID={message.userUUID}
               key={message.messageId}
               profilePicture={message.userProfilePicture}
               displayName={message.userDisplayName}

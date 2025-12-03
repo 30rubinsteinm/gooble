@@ -4,5 +4,5 @@ export default interface ChatMessage {
   userUUID: string;
   messageContent: string;
   messageTime: Date;
-  messageId: number;
+  messageId: string;
 }

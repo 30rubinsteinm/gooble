@@ -14,6 +14,7 @@ import createChatObject from "./utils/ChatMessageCreator";
 import createProfileObject from "./utils/UserProfileCreator";
 
 const App = () => {
+  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
   const [messages, setMessages] = useState<ChatMessageObject[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const [profile, setProfile] = useState<UserProfile>(
@@ -46,12 +47,12 @@ const App = () => {
     };
 
     const onRecentMessagesRequestReceived = (value: ChatMessageObject[]) => {
-      value.forEach((element) => {
+      value.reverse().forEach((element) => {
         addNewInput(element);
       });
     };
 
-    if (profile.userUUID && profile.userUUID !== "0") {
+    if (profile.userID && profile.userID !== "0") {
       socket.on("connect", onConnect);
       socket.on("disconnect", onDisconnect);
       socket.on("client receive message", clientReceiveMessage);
@@ -76,9 +77,18 @@ const App = () => {
         socket.disconnect();
       }
     };
-  }, [profile.userUUID]);
+  }, [profile.userID]);
 
-  useEffect(() => {}, [messages]);
+  useEffect(() => {
+    document.title =
+      unreadMessageCount == 0 ? "GoobApp" : `GoobApp (${unreadMessageCount})`;
+  }, [unreadMessageCount]);
+
+  useEffect(() => {
+    if (document.hasFocus()) {
+      setUnreadMessageCount(0);
+    }
+  }, [document.hasFocus()]);
 
   const addNewInput = (newMessage: ChatMessageObject) => {
     if (!document.hasFocus()) {
@@ -90,6 +100,7 @@ const App = () => {
           icon: img,
         }
       );
+      setUnreadMessageCount(unreadMessageCount + 1);
     }
 
     newMessage.messageTime = new Date(newMessage.messageTime); // Websockets can't accept Dates, so they turn them into strings. This turns it back
@@ -105,7 +116,7 @@ const App = () => {
       addNewInput(
         createChatObject({
           newUserDisplayName: "Test User",
-          newUserID: "0",
+          newUserUUID: "0",
           newUserProfilePicture: null,
           newMessageContent: contentText,
         })
@@ -119,7 +130,7 @@ const App = () => {
       // Make sure the content isn't blank!
       let message: ChatMessageObject = createChatObject({
         newUserDisplayName: profile.username,
-        newUserID: profile.userID,
+        newUserUUID: profile.userUUID,
         newUserProfilePicture: profile.userProfilePicture,
         newMessageContent: contentText,
       });
@@ -192,7 +203,7 @@ const App = () => {
             <ChatWindow
               messages={messages}
               sendMessage={handleMessageSent}
-              clientUserID={profile.userUUID}
+              clientUserUUID={profile.userUUID}
             ></ChatWindow>
           ),
         },
