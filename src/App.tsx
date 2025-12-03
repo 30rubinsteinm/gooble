@@ -305,6 +305,18 @@ const App = () => {
             </div>
           ),
         },
+        {
+          path: "/games/amazing-game-idk-name-yet",
+          element: (
+            <div className="iframe-wrapper">
+              <iframe
+                src="https://scratch.mit.edu/projects/1175964459/embed"
+                className="fullscreen-game"
+                allow="fullscreen"
+              ></iframe>
+            </div>
+          )
+        }
       ],
     },
     {

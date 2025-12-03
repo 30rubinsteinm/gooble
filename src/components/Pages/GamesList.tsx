@@ -32,6 +32,14 @@ const GamesList = () => {
       >
         Click For Points Web
       </button>
+
+      <button
+        className="games-list-button"
+        onClick={() => navigate("/games/amazing-game-idk-name-yet", { viewTransition: true })}
+      >
+        Amazing Game IDK Name Yet (Scratch)
+      </button>
+
     </div>
   );
 };
