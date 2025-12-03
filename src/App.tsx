@@ -75,11 +75,13 @@ const App = () => {
   const addNewInput = (newMessage: ChatMessageObject) => {
     if (!document.hasFocus()) {
       const img = newMessage.userProfilePicture;
-      const text = `${newMessage.userDisplayName}: ${newMessage.messageContent}`;
-      const notification = new Notification("New message!", {
-        body: text,
-        icon: img,
-      });
+      const notification = new Notification(
+        `New message from ${newMessage.userDisplayName}`,
+        {
+          body: newMessage.messageContent,
+          icon: img,
+        }
+      );
     }
 
     newMessage.messageTime = new Date(newMessage.messageTime); // Websockets can't accept Dates, so they turn them into strings. This turns it back
