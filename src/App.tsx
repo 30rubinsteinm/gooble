@@ -49,7 +49,10 @@ const App = () => {
     };
 
     const clientReceiveMessage = (value: ChatMessageObject) => {
-      setUnreadMessageCount(prevCount => prevCount + 1)
+      if (value.userUUID == profile.userUUID) {
+        setUnreadMessageCount(prevCount => prevCount + 1)
+      }
+
       addNewInput(value);
     };
 
