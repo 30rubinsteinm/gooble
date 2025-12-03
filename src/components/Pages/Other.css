@@ -38,6 +38,7 @@
 
 .goofy-goober {
   width: 150%;
+  pointer-events: none;
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
