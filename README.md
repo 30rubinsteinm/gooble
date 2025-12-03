@@ -1,3 +1,4 @@
-An open-source chatting website! It's my first time using JavaScript longer than 2 seconds, and first time using React ever, so don't hate on the terrible code quality :)
+# GoobApp
+<img width="200" height="200" alt="logo" src="https://github.com/user-attachments/assets/0735eafb-b6fd-4364-9a7c-9e1d3c9fdf35" />
 
-Will update later
+An open-source chatting website powered by React and Supabase.
