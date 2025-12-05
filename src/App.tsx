@@ -16,7 +16,7 @@ import UserProfile from "./types/UserProfileObject";
 import createChatObject from "./utils/ChatMessageCreator";
 import createProfileObject from "./utils/UserProfileCreator";
 import EmptyPanel from "./components/Pages/EmptyPanel";
-
+import ErrorPage from "./components/Pages/ErrorPage"
 const App = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
@@ -227,6 +227,7 @@ const App = () => {
     {
       path: "/",
       element: <Layout session={session} profileObject={profile}></Layout>,
+      errorElement: <ErrorPage/>,
       children: [
         {
           index: true,
@@ -324,11 +325,7 @@ const App = () => {
           )
         }
       ],
-    },
-    {
-      path: "*",
-      element: <h2>Loading...</h2>,
-    },
+    }
   ];
 
   const router = createBrowserRouter(routes, {
