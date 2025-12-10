@@ -1,8 +1,8 @@
 @import url("../../index.css");
 
 .games-list {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;

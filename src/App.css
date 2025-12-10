@@ -15,8 +15,8 @@ body {
 
 .chat-users-panel-container,
 .switcher-panel-container {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -65,8 +65,8 @@ body {
 }
 
 .iframe-wrapper {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -78,8 +78,8 @@ body {
 }
 
 .chat-window {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -93,8 +93,8 @@ body {
 
   grid-row: 2;
 
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
 
@@ -116,8 +116,8 @@ body {
 }
 
 .chat-mini-window {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   padding: 1em;
@@ -128,7 +128,7 @@ body {
   transform-origin: left;
 
   width: 100%;
-  
+
   justify-self: center;
 
   overflow-y: scroll;

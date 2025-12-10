@@ -3,14 +3,14 @@
 input {
   width: 100%;
   height: 35px;
-  border-radius: var(--roundness);
   padding: 10px;
   box-sizing: border-box;
 }
 
 .setting-panel {
   border: 2px solid;
-  border-color: var(--secondary-color);
+  background-color: var(--bg-light);
+  border-color: var(--primary);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,14 +28,18 @@ input {
   background-color: red;
 }
 
+.setting-input {
+  color: var(--secondary);
+}
+
 .setting-error {
   color: red;
   font-weight: bold;
 }
 
 .settings-page {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;

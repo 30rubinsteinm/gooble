@@ -1,6 +1,6 @@
 .other-page {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -16,8 +16,9 @@
 }
 
 .logged-out-page {
-  border-color: var(--secondary-color);
-  background-color: var(--bg-color);
+  border-color: var(--primary);
+  background-color: var(--bg);
+
   border-width: 2px;
   border-style: solid;
   font-size: 1rem;
@@ -35,8 +36,9 @@
 }
 
 .github-link-container {
-  border: 2px solid;
-  border-color: var(--secondary-color);
+  border: 2px solid var(--bg);
+  background-color: var(--bg-light);
+  color: var(--text);
   padding: 15px;
 }
 

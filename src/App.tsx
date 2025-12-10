@@ -263,7 +263,7 @@ const App = () => {
         {
           path: "/settings/*",
           element:
-            !isAuthLoading && session != null ? (
+            (!isAuthLoading && session != null) || !import.meta.env.PROD ? (
               <SettingsPage profile={profile}></SettingsPage>
             ) : (
               <ChatLoggedOutWindow></ChatLoggedOutWindow>

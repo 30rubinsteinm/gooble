@@ -4,7 +4,7 @@
 
   color-scheme: light dark;
 
-  background-color: var(--page-bg-color);
+  background-color: var(--bg-dark);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,8 +29,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  color: var(--text-color);
-  background-color: var(--page-bg-color);
+  color: var(--text);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -58,38 +57,93 @@ button {
 }
 
 button:hover {
-  border-color: #b9e89c;
+  border-color: var(--highlight);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Thanks to https://www.iamsajid.com/ui-colors/ for this template/picker thing*/
+:root {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(120, 7%, 22%);
+  --bg: hsl(124, 16%, 17%);
+  --bg-light: hsl(116, 36%, 68%);
+  --text: hsl(116 100% 91%);
+  --text-muted: hsl(116 27% 66%);
+  --highlight: hsl(117 24% 35%);
+  --border: hsl(117 33% 24%);
+  --border-muted: hsl(119 57% 14%);
+  --primary: hsl(117 31% 34%);
+  --disabled-primary: hsla(117, 31%, 34%, 0.5);
+  --secondary: hsl(294 42% 72%);
+  --danger: hsl(9 42% 65%);
+  --warning: hsl(51 29% 53%);
+  --success: hsl(148 27% 56%);
+  --info: hsl(217 46% 66%);
+  /* oklch */
+  --bg-dark: oklch(34.596% 0.01739 145.292);
+  --bg: oklch(30% 0.03 145);
+  --bg-light: oklch(61% 0.08 143);
+  --text: oklch(0.96 0.08 143);
+  --text-muted: oklch(0.76 0.08 143);
+  --highlight: oklch(0.5 0.08 143);
+  --border: oklch(0.4 0.08 143);
+  --border-muted: oklch(0.3 0.08 143);
+  --primary: oklch(0.5 0.1 143);
+  --disabled-primary: oklch(50.127% 0.10113 142.811 / 0.5);
+  --secondary: oklch(0.76 0.1 323);
+  --danger: oklch(0.7 0.08 30);
+  --warning: oklch(0.7 0.08 100);
+  --success: oklch(0.7 0.08 160);
+  --info: oklch(0.7 0.08 260);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+    /* hsl (fallback color) */
+    --bg-dark: hsl(115 39% 88%);
+    --bg: hsl(115 68% 93%);
+    --bg-light: hsl(115 100% 98%);
+    --text: hsl(125 100% 2%);
+    --text-muted: hsl(117 33% 24%);
+    --highlight: hsl(116 100% 96%);
+    --border: hsl(116 19% 47%);
+    --border-muted: hsl(116 21% 58%);
+    --primary: hsl(116 18% 58%);
+    --secondary: hsl(293 34% 30%);
+    --danger: hsl(8 32% 41%);
+    --warning: hsl(51 46% 30%);
+    --success: hsl(150 37% 33%);
+    --info: hsl(217 34% 43%);
+    /* oklch */
+    --bg-dark: oklch(0.92 0.04 143);
+    --bg: oklch(0.96 0.04 143);
+    --bg-light: oklch(1 0.04 143);
+    --text: oklch(0.15 0.08 143);
+    --text-muted: oklch(0.4 0.08 143);
+    --highlight: oklch(1 0.08 143);
+    --border: oklch(0.6 0.08 143);
+    --border-muted: oklch(0.7 0.08 143);
+    --primary: oklch(69% 0.07 143);
+    --secondary: oklch(0.4 0.1 323);
+    --danger: oklch(0.5 0.08 30);
+    --warning: oklch(0.5 0.08 100);
+    --success: oklch(0.5 0.08 160);
+    --info: oklch(0.5 0.08 260);
   }
 }
 
 :root {
-  --primary-color: rgb(81, 104, 54);
-  --disabled-primary-color: rgb(61, 66, 55);
-  --secondary-color: rgb(144, 151, 84);
-  --bg-color: rgb(48, 52, 47);
-  --page-bg-color: rgb(33, 36, 33);
-  --text-color: white;
+  /*
+  --secondary-color: rgb(144, 151, 84); 
+  --text-color: white; */
   --roundness: 8px;
 }
 
 ::placeholder {
-  color: var(--secondary-color);
+  color: var(--primary);
 }
 
 /* Style the entire scrollbar */
@@ -100,19 +154,19 @@ button:focus-visible {
 
 /* Style the scrollbar track (the background) */
 ::-webkit-scrollbar-track {
-  background: rgb(48, 52, 47);
+  background: var(--primary);
   border-radius: var(--roundness);
 }
 
 /* Style the scrollbar thumb (the draggable handle) */
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color); /* Darker gray thumb */
+  background: var(--secondary);
   border-radius: var(--roundness);
 }
 
 /* Style the thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-color);
+  background: var(--secondary);
 }
 
 ::-webkit-scrollbar-corner {
@@ -120,8 +174,8 @@ button:focus-visible {
 }
 
 button {
-  background-color: var(--primary-color);
-  box-shadow: 0px 0px 0px var(--secondary-color);
+  background-color: var(--primary);
+  box-shadow: 0px 0px 0px var(--primary);
   transition: box-shadow 0.25s ease-in-out;
 }
 
@@ -135,34 +189,30 @@ input {
 input:focus,
 input:focus-visible,
 button:focus,
-button:focus-visible {
-  box-shadow: 0px 0px 10px var(--secondary-color);
-  transition: box-shadow 0.25s ease-in-out;
-}
-
+button:focus-visible,
 input:hover,
 button:hover {
-  box-shadow: 0px 0px 10px var(--secondary-color);
+  box-shadow: 0px 0px 10px var(--primary);
   transition: box-shadow 0.25s ease-in-out;
 }
 
 input:active,
 button:active {
-  box-shadow: 0px 0px 5px var(--secondary-color);
+  box-shadow: 0px 0px 5px var(--primary);
   transition: box-shadow 0.25s ease-in-out;
 }
 
 button:disabled,
 input:disabled {
-  box-shadow: 0px 0px 0px var(--secondary-color);
+  box-shadow: 0px 0px 0px var(--primary);
   transition: box-shadow 0.25s ease-in-out;
-  background-color: var(--disabled-primary-color);
+  background-color: var(--disabled-primary);
   transition: background-color 0.25s ease-in-out;
 }
 
 button:not(:disabled),
 input:not(:disabled) {
-  background-color: var(--primary-color);
+  background-color: var(--primary);
   transition: background-color 0.25s ease-in-out;
 }
 
