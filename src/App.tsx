@@ -116,19 +116,18 @@ const App = () => {
     newMessage: ChatMessageObject,
     shouldNotify: boolean = true
   ) => {
-    if (newMessage.userUUID != profile.userUUID && isWindowFocused) {
+    if (newMessage.userUUID != profile.userUUID && !isWindowFocused) {
       setUnreadMessageCount((prevCount) => prevCount + 1);
-    }
-
-    if (!document.hasFocus() && shouldNotify) {
-      const img = newMessage.userProfilePicture;
-      const notification = new Notification(
-        `New message from ${newMessage.userDisplayName}`,
-        {
-          body: newMessage.messageContent,
-          icon: img,
-        }
-      );
+      if (shouldNotify) {
+        const img = newMessage.userProfilePicture;
+        const notification = new Notification(
+          `New message from ${newMessage.userDisplayName}`,
+          {
+            body: newMessage.messageContent,
+            icon: img,
+          }
+        );
+      }
     }
 
     newMessage.messageTime = new Date(newMessage.messageTime); // Websockets can't accept Dates, so they turn them into strings. This turns it back
