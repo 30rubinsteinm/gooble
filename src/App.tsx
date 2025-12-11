@@ -115,6 +115,9 @@ const App = () => {
     newMessage: ChatMessageObject,
     shouldNotify: boolean = true
   ) => {
+    console.log("isWindowFocused:", isWindowFocused);
+    console.log("profile UUID:", profile.userUUID);
+    console.log("message UUID:", newMessage.userUUID);
     if (newMessage.userUUID != profile.userUUID && !isWindowFocused) {
       setUnreadMessageCount((prevCount) => prevCount + 1);
       if (shouldNotify && "Notification" in window) {
