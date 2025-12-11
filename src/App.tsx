@@ -51,10 +51,6 @@ const App = () => {
     };
 
     const clientReceiveMessage = (value: ChatMessageObject) => {
-      if (value.userUUID != profile.userUUID && !isWindowFocused) {
-        setUnreadMessageCount((prevCount) => prevCount + 1);
-      }
-
       addNewInput(value);
     };
 
@@ -120,6 +116,10 @@ const App = () => {
     newMessage: ChatMessageObject,
     shouldNotify: boolean = true
   ) => {
+    if (newMessage.userUUID != profile.userUUID && isWindowFocused) {
+      setUnreadMessageCount((prevCount) => prevCount + 1);
+    }
+
     if (!document.hasFocus() && shouldNotify) {
       const img = newMessage.userProfilePicture;
       const notification = new Notification(
@@ -144,7 +144,7 @@ const App = () => {
       addNewInput(
         createChatObject({
           newUserDisplayName: "Test User",
-          newUserUUID: "0",
+          newUserUUID: "1",
           newUserProfilePicture: null,
           newMessageContent: contentText,
         }),
