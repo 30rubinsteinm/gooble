@@ -115,9 +115,11 @@ const App = () => {
     newMessage: ChatMessageObject,
     shouldNotify: boolean = true
   ) => {
+    console.log("Is window focused: ", isWindowFocused);
     if (!isWindowFocused) {
       // FIXME: profile.userUUID is null
       setUnreadMessageCount((prevCount) => prevCount + 1);
+
       if (shouldNotify && "Notification" in window) {
         const img = newMessage.userProfilePicture;
         const notification = new Notification(
