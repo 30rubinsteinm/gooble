@@ -51,11 +51,26 @@ const App = () => {
 
     const clientReceiveMessage = (value: ChatMessageObject) => {
       addNewInput(value);
+
+      if (session?.user.id == value.userUUID || document.hasFocus()) return;
+
+      setUnreadMessageCount((prevCount) => prevCount + 1);
+
+      if ("Notification" in window) {
+        const img = value.userProfilePicture;
+        const notification = new Notification(
+          `New message from ${value.userDisplayName}`,
+          {
+            body: value.messageContent,
+            icon: img,
+          }
+        );
+      }
     };
 
     const onRecentMessagesRequestReceived = (value: ChatMessageObject[]) => {
       value.reverse().forEach((element) => {
-        addNewInput(element, false);
+        addNewInput(element);
       });
     };
 
@@ -91,26 +106,19 @@ const App = () => {
       unreadMessageCount === 0 ? "GoobApp" : `GoobApp (${unreadMessageCount})`;
   }, [unreadMessageCount]);
 
-  const addNewInput = (
-    newMessage: ChatMessageObject,
-    shouldNotify: boolean = true
-  ) => {
-    if (!document.hasFocus()) {
-      // FIXME: profile.userUUID is null
-      setUnreadMessageCount((prevCount) => prevCount + 1);
+  const onFocus = () => {
+    setUnreadMessageCount(0);
+  };
 
-      if (shouldNotify && "Notification" in window) {
-        const img = newMessage.userProfilePicture;
-        const notification = new Notification(
-          `New message from ${newMessage.userDisplayName}`,
-          {
-            body: newMessage.messageContent,
-            icon: img,
-          }
-        );
-      }
-    }
+  useEffect(() => {
+    window.addEventListener("focus", onFocus);
 
+    return () => {
+      window.removeEventListener("focus", onFocus);
+    };
+  }, []);
+
+  const addNewInput = (newMessage: ChatMessageObject) => {
     newMessage.messageTime = new Date(newMessage.messageTime); // Websockets can't accept Dates, so they turn them into strings. This turns it back
     setMessages((prevMessage) =>
       prevMessage.length < 200
@@ -120,20 +128,18 @@ const App = () => {
   };
 
   const handleMessageSent = (contentText: string) => {
-    if (!import.meta.env.PROD && !profile.userUUID) {
+    if (!import.meta.env.PROD && !session?.user.id) {
       addNewInput(
         createChatObject({
           newUserDisplayName: "Test User",
           newUserUUID: "1",
           newUserProfilePicture: null,
           newMessageContent: contentText,
-        }),
-        false
+        })
       );
       return;
     }
 
-    if (!profile.userUUID) return;
     if (!profile.username) return;
 
     if (contentText.trim() != "") {
