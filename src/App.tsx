@@ -108,6 +108,7 @@ const App = () => {
 
   const onFocus = () => {
     setUnreadMessageCount(0);
+    document.title = "GoobApp";
   };
 
   useEffect(() => {
