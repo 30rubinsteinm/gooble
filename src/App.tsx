@@ -23,7 +23,6 @@ import goober from "./assets/images/goofy_goober.png"
 const App = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
-  const [isWindowFocused, setIsWindowFocused] = useState<boolean>(true);
   const [messages, setMessages] = useState<ChatMessageObject[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
@@ -56,11 +55,22 @@ const App = () => {
     };
 
     const clientReceiveMessage = (value: ChatMessageObject) => {
-      if (value.userUUID != profile.userUUID && !isWindowFocused) {
-        setUnreadMessageCount((prevCount) => prevCount + 1);
-      }
-
       addNewInput(value);
+
+      if (session?.user.id == value.userUUID || document.hasFocus()) return;
+
+      setUnreadMessageCount((prevCount) => prevCount + 1);
+
+      if ("Notification" in window) {
+        const img = value.userProfilePicture;
+        const notification = new Notification(
+          `New message from ${value.userDisplayName}`,
+          {
+            body: value.messageContent,
+            icon: img,
+          }
+        );
+      }
     };
 
     const onRecentMessagesRequestReceived = (value: ChatMessageObject[], users: UserProfile[] | null) => {
@@ -70,7 +80,7 @@ const App = () => {
       }
 
       value.reverse().forEach((element) => {
-        addNewInput(element, false);
+        addNewInput(element);
       });
     };
 
@@ -132,41 +142,20 @@ const App = () => {
       unreadMessageCount === 0 ? "GoobApp" : `GoobApp (${unreadMessageCount})`;
   }, [unreadMessageCount]);
 
+  const onFocus = () => {
+    setUnreadMessageCount(0);
+    document.title = "GoobApp";
+  };
+
   useEffect(() => {
-    window.addEventListener("focus", () => {
-      setUnreadMessageCount(0);
-      setIsWindowFocused(true);
-    });
-    window.addEventListener("blur", () => {
-      setIsWindowFocused(false);
-    });
+    window.addEventListener("focus", onFocus);
 
     return () => {
-      window.removeEventListener("focus", () => {
-        setUnreadMessageCount(0);
-        setIsWindowFocused(true);
-      });
-      window.removeEventListener("blur", () => {
-        setIsWindowFocused(false);
-      });
+      window.removeEventListener("focus", onFocus);
     };
   }, []);
 
-  const addNewInput = (
-    newMessage: ChatMessageObject,
-    shouldNotify: boolean = true
-  ) => {
-    if (!document.hasFocus() && shouldNotify) {
-      const img = newMessage.userProfilePicture;
-      const notification = new Notification(
-        `New message from ${newMessage.userDisplayName}`,
-        {
-          body: newMessage.messageContent,
-          icon: img,
-        }
-      );
-    }
-
+  const addNewInput = (newMessage: ChatMessageObject) => {
     newMessage.messageTime = new Date(newMessage.messageTime); // Websockets can't accept Dates, so they turn them into strings. This turns it back
     setMessages((prevMessage) =>
       prevMessage.length < 200
@@ -176,20 +165,18 @@ const App = () => {
   };
 
   const handleMessageSent = (contentText: string) => {
-    if (!import.meta.env.PROD && !profile.userUUID) {
+    if (!import.meta.env.PROD && !session?.user.id) {
       addNewInput(
         createChatObject({
           newUserDisplayName: "Test User",
           newUserUUID: "1",
-          newUserProfilePicture: goober,
+          newUserProfilePicture: null,
           newMessageContent: contentText,
-        }),
-        false
+        })
       );
       return;
     }
 
-    if (!profile.userUUID) return;
     if (!profile.username) return;
 
     if (contentText.trim() != "") {
