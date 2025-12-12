@@ -1,10 +1,7 @@
 @import url("../../index.css");
 
 .games-list {
-  border-color: var(--primary);
   background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
   font-size: 1rem;
   padding: 1em;
   overflow-y: auto;

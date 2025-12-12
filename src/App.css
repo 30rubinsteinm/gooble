@@ -6,21 +6,18 @@ body {
 
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-columns: 1fr 5fr 1.5fr;
   grid-template-rows: 1fr 15fr min-content;
-  height: calc(100vh - 25px);
-  width: calc(100vw - 75px);
-  gap: 25px;
+  width: 100vw;
+  height: 100vh;
 }
 
 .chat-users-panel-container,
 .switcher-panel-container {
-  border-color: var(--primary);
   background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
   font-size: 1rem;
   padding: 1em;
+  box-sizing: border-box;
 
   grid-row: 2;
 
@@ -35,6 +32,8 @@ body {
 
   overflow-y: auto;
   overflow-y: auto;
+
+  gap: 5px;
 }
 
 .footnotes {
@@ -55,20 +54,17 @@ body {
 .chat-users-panel-container {
   transform-origin: left;
   grid-column: 3;
-  gap: 25px;
+  padding-left: 0%;
+  padding-right: 0%;
 }
 
 .switcher-panel-container {
   transform-origin: right;
   grid-column: 1;
-  gap: 5px;
 }
 
 .iframe-wrapper {
-  border-color: var(--primary);
   background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
   font-size: 1rem;
 
   grid-column-start: 2;
@@ -78,12 +74,9 @@ body {
 }
 
 .chat-window {
-  border-color: var(--primary);
-  background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
+  padding-top: 1em;
+
   font-size: 1rem;
-  padding: 1em;
   overflow-y: auto;
   overflow-x: hidden;
   word-break: break-word;
@@ -93,22 +86,23 @@ body {
 
   grid-row: 2;
 
-  border-color: var(--primary);
-  background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
-
   display: grid;
   grid-template-rows: 1fr min-content;
 }
 
 .chat-messages {
+  background-color: var(--bg-dark);
+  border-radius: 18px;
   overflow-x: hidden;
+  overflow-y: auto;
+  
   min-width: 100%;
   max-width: 100%;
   font-size: 1rem;
+
   padding: 1em;
-  overflow-y: auto;
+  box-sizing: border-box;
+  
   word-break: break-word;
 
   display: flex;
@@ -116,11 +110,9 @@ body {
 }
 
 .chat-mini-window {
-  border-color: var(--primary);
   background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
   padding: 1em;
+  box-sizing: border-box;
 
   grid-column: 3;
   grid-row: 2;

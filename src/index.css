@@ -4,7 +4,7 @@
 
   color-scheme: light dark;
 
-  background-color: var(--bg-dark);
+  background-color: var(--bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,8 +31,6 @@ body {
   min-height: 100vh;
   color: var(--text);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 
 h1 {
@@ -146,11 +144,6 @@ button:focus-visible {
 
 ::placeholder {
   color: var(--primary);
-}
-
-/* Style the entire scrollbar */
-::-webkit-scrollbar {
-  display: none;
 }
 
 button {

@@ -1,8 +1,5 @@
 .other-page {
-  border-color: var(--primary);
   background-color: var(--bg);
-  border-width: 2px;
-  border-style: solid;
   font-size: 1rem;
   padding: 1em;
   word-break: break-word;
@@ -16,11 +13,7 @@
 }
 
 .logged-out-page {
-  border-color: var(--primary);
   background-color: var(--bg);
-
-  border-width: 2px;
-  border-style: solid;
   font-size: 1rem;
   padding: 1em;
   overflow: hidden;
@@ -42,6 +35,8 @@
 }
 
 .goofy-goober {
+  width: 100%;
+  transform: translateY(-10%);
   pointer-events: none;
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: crisp-edges;
