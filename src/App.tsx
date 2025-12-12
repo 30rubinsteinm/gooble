@@ -18,6 +18,8 @@ import ChatMessageObject from "./types/ChatMessageObject";
 import UserProfile from "./types/UserProfileObject";
 import createChatObject from "./utils/ChatMessageCreator";
 import createProfileObject from "./utils/UserProfileCreator";
+import goober from "./assets/images/goofy_goober.png"
+
 const App = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
@@ -25,6 +27,9 @@ const App = () => {
   const [messages, setMessages] = useState<ChatMessageObject[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
+
+  const [activeUsers, setActiveUsers] = useState<UserProfile[]>([]);
+
   const [profile, setProfile] = useState<UserProfile>(
     createProfileObject({
       newUserDisplayName: null,
@@ -58,11 +63,40 @@ const App = () => {
       addNewInput(value);
     };
 
-    const onRecentMessagesRequestReceived = (value: ChatMessageObject[]) => {
+    const onRecentMessagesRequestReceived = (value: ChatMessageObject[], users: UserProfile[] | null) => {
+      if (users)
+      {
+        setActiveUsers(users);
+      }
+
       value.reverse().forEach((element) => {
         addNewInput(element, false);
       });
     };
+
+    const onAddActiveUser = (value: UserProfile) => {
+      let newActiveUsers = activeUsers;
+      const index = newActiveUsers.indexOf(value);
+
+      if (index > -1) { // js no if exists function :(
+        newActiveUsers.splice(index, 1);
+      }
+
+      newActiveUsers.push(value);
+      
+      setActiveUsers(newActiveUsers);
+    };
+
+    const onRemoveActiveUser = (value: UserProfile) => {
+      let newActiveUsers = activeUsers;
+      const index = newActiveUsers.indexOf(value);
+
+      if (index > -1) { // js no if exists function :(
+        newActiveUsers.splice(index, 1);
+      }
+
+      setActiveUsers(newActiveUsers);
+    }
 
     if (!isAuthLoading && session) {
       socket.on("connect", onConnect);
@@ -70,6 +104,8 @@ const App = () => {
       socket.on("client receive message", clientReceiveMessage);
       socket.on("rate limited", onRateLimited);
       socket.on("receive recent messages", onRecentMessagesRequestReceived);
+      socket.on("new active user", onAddActiveUser);
+      socket.on("remove active user", onRemoveActiveUser);
 
       if (!socket.connected) {
         socket.connect();
@@ -144,8 +180,8 @@ const App = () => {
       addNewInput(
         createChatObject({
           newUserDisplayName: "Test User",
-          newUserUUID: "0",
-          newUserProfilePicture: null,
+          newUserUUID: "1",
+          newUserProfilePicture: goober,
           newMessageContent: contentText,
         }),
         false
@@ -231,6 +267,8 @@ const App = () => {
         <Layout
           session={session}
           profileObject={profile}
+          usersList={activeUsers}
+          maxUsers={activeUsers.length}
           chatWindow={
             (isAuthLoading || session == null) && import.meta.env.PROD ? (
               <div className="chat-users-panel-container"></div>
