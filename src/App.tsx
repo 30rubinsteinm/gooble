@@ -82,8 +82,8 @@ const App = () => {
       users: UserProfile[]
     ) => {
       console.log("Receiving recent users and messages...");
-      console.log("Recent messages: " + value);
-      console.log("Recent users: " + users);
+      console.log(value);
+      console.log(users);
 
       if (users) {
         setActiveUsers(users);
