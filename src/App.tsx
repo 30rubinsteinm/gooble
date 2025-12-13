@@ -80,6 +80,7 @@ const App = () => {
       value: ChatMessageObject[],
       users: UserProfile[]
     ) => {
+      console.log(users);
       if (users) {
         setActiveUsers(users);
       }
