@@ -252,8 +252,10 @@ const App = () => {
           if (_event == "INITIAL_SESSION") {
             retrieveUserData(session);
             retrieveRecentMessages();
+            retrieveActiveUsers();
           } else if (_event == "TOKEN_REFRESHED") {
             retrieveUserData(session);
+            retrieveActiveUsers();
           }
         } else {
           setSession(null);
