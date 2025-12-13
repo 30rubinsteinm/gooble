@@ -90,8 +90,11 @@ const App = () => {
     };
 
     const onAddActiveUser = (value: UserProfile) => {
-      let newActiveUsers = activeUsers;
-      const index = newActiveUsers.indexOf(value);
+      console.log("new active user!");
+      let newActiveUsers = activeUsers.slice();
+      const index = newActiveUsers.findIndex((element) => {
+        return element.userUUID == value.userUUID;
+      });
 
       if (index > -1) {
         // js no if exists function :(
@@ -104,9 +107,10 @@ const App = () => {
     };
 
     const onRemoveActiveUser = (value: UserProfile) => {
-      let newActiveUsers = activeUsers;
-      const index = newActiveUsers.indexOf(value);
-
+      let newActiveUsers = activeUsers.slice();
+      const index = newActiveUsers.findIndex((element) => {
+        return element.userUUID == value.userUUID;
+      });
       if (index > -1) {
         // js no if exists function :(
         newActiveUsers.splice(index, 1);
