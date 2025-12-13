@@ -44,6 +44,7 @@ const App = () => {
 
       if (profile.userUUID != null) {
         retrieveActiveUsers();
+        socket.emit("add to active users list", profile);
       }
     };
 
