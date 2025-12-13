@@ -42,7 +42,7 @@ const App = () => {
       console.log("Connected!");
       setIsConnected(true);
 
-      if (profile) {
+      if (profile.userUUID != null) {
         socket.emit("add to active users list", profile);
       }
     };
