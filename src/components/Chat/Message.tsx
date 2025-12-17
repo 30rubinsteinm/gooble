@@ -167,7 +167,7 @@ const MessageDisplay = ({
 
         <div className="chat-message-content">
           <pre className="chat-message-content" ref={contentRef}>
-            {styledContent}
+            {isEditing ? message.messageContent : styledContent}
           </pre>
           {message.isEdited && <p className="chat-message-edited"> (edited)</p>}
         </div>
