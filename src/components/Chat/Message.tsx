@@ -164,8 +164,11 @@ const MessageDisplay = ({
             })}
           </p>
         )}
-        <pre className="chat-message-content" ref={contentRef}>
-          {styledContent}
+
+        <pre className="chat-message-content">
+          <pre className="chat-message-content" ref={contentRef}>
+            {styledContent}
+          </pre>
           {message.isEdited && <p className="chat-message-edited"> (edited)</p>}
         </pre>
       </div>
