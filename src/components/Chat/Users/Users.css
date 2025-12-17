@@ -35,6 +35,7 @@
 }
 
 .role {
+  white-space: nowrap;
   border-radius: 50px;
   padding: 5px;
   background-color: green;
