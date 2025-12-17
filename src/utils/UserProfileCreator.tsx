@@ -5,17 +5,20 @@ const createProfileObject = ({
   newUserProfilePicture,
   newUserID,
   newUserUUID,
+  newUserRole,
 }: {
   newUserDisplayName: string | null;
   newUserProfilePicture: string | null;
   newUserID: string | null;
   newUserUUID: string | null;
+  newUserRole: string | null;
 }) => {
   let inputObject = {
     username: newUserDisplayName,
     userProfilePicture: newUserProfilePicture,
     userID: newUserID,
     userUUID: newUserUUID,
+    userRole: newUserRole,
   } as UserProfile;
 
   return inputObject;

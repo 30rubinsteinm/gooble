@@ -1,32 +1,27 @@
 import "../../../App.css";
-import "./Users.css"
+import UserProfile from "../../../types/UserProfileObject";
+import "./Users.css";
 
 const UserDisplay = ({
-  userID,
-  displayName,
-  profilePicture,
+  userData,
   isDarkBG,
 }: {
-  userID: string;
-  displayName: string;
-  profilePicture: string;
+  userData: UserProfile;
   isDarkBG: boolean;
 }) => {
   return (
-    <div
-      className={ isDarkBG ?
-        "user-container-dark" : "user-container-light"
-      }
-    >
-        <img
-          src={profilePicture}
-          alt=""
-          className="user-profile-picture"
-        />
+    <div className={isDarkBG ? "user-container-dark" : "user-container-light"}>
+      <img
+        src={userData.userProfilePicture}
+        alt=""
+        className="user-profile-picture"
+      />
 
-        <p className="username">
-          {userID == "0" ? "Deleted user" : displayName}
-        </p>
+      <p className="username">
+        {userData.userID == "0" ? "Deleted user" : userData.username}
+      </p>
+
+      {userData.userRole && <span className="role">{userData.userRole}</span>}
     </div>
   );
 };

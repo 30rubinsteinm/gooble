@@ -34,6 +34,7 @@ const App = () => {
       newUserProfilePicture: null,
       newUserUUID: null,
       newUserID: null,
+      newUserRole: null,
     })
   );
 
@@ -210,7 +211,7 @@ const App = () => {
     console.log("Retrieving user data...");
     if (!Client) return;
     const { data, error } = await Client.from("profiles")
-      .select("username, profile_image_url, user_id")
+      .select("username, profile_image_url, user_id, role")
       .eq("user_uuid", session.user.id)
       .single();
     if (error) {
@@ -223,6 +224,7 @@ const App = () => {
       newUserProfilePicture: data.profile_image_url,
       newUserID: data.user_id,
       newUserUUID: session.user.id,
+      newUserRole: data.role,
     });
 
     setProfile(newProfile);
@@ -240,6 +242,23 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (!import.meta.env.PROD) {
+      const newProfile = createProfileObject({
+        newUserDisplayName: "Test User",
+        newUserUUID: "1",
+        newUserProfilePicture: null,
+        newUserRole: "Test",
+        newUserID: "1",
+      });
+
+      setProfile(newProfile);
+
+      setActiveUsers([newProfile, newProfile, newProfile]);
+      setIsAuthLoading(false);
+
+      return;
+    }
+
     if (!Client) {
       setIsAuthLoading(false);
       return;

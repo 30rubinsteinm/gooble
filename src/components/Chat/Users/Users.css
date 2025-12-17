@@ -2,15 +2,13 @@
 
 .user-container-dark,
 .user-container-light {
-  display: grid;
-  grid-template-columns: min-content auto;
+  display: flex;
   padding: 5px;
   width: 80%;
   place-self: center;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-  /* border-radius: 0; */
-  /* border-top: 1px solid black; */
 }
 
 .user-container-dark {
@@ -34,4 +32,11 @@
 .username {
   grid-column: 2;
   color: black;
+}
+
+.role {
+  border-radius: 50px;
+  padding: 5px;
+  background-color: green;
+  border: 1px solid lightgreen;
 }
