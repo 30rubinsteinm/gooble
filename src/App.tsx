@@ -164,8 +164,8 @@ const App = () => {
         if (!socket.connected) {
           socket.connect();
         }
-      } else if (!isAuthLoading && !session) {
-        if (socket.connected) {
+      } else {
+        if (socket.connected && !isAuthLoading) {
           socket.disconnect();
         }
       }
@@ -312,8 +312,14 @@ const App = () => {
             retrieveActiveUsers();
           } else if (_event == "TOKEN_REFRESHED") {
             socket.auth = { token: session?.access_token };
-            socket.disconnect();
-            socket.connect();
+            if (socket.connected) {
+              socket.disconnect();
+            }
+
+            if (!socket.connected) {
+              socket.connect();
+            }
+
             retrieveUserData(session);
             retrieveActiveUsers();
           }
