@@ -32,39 +32,39 @@ const MessageDisplay = ({
     cfp_clicked: cfp_clicked,
   };
 
-  if (!message.messageContent) return null;
+  if (!message.messageContent && message.messageContent != "") return null;
   const splitContent = message.messageContent.split(/(:[^:]+:)/);
-  const styledContent = splitContent.map((item) => {
+  const styledContent = splitContent.map((item, index) => {
     if (item[0] === ":" && item[item.length - 1] === ":") {
       const emojiName = item.slice(1, item.length - 1);
       if (emojiName in emojis) {
         if (item === message.messageContent) {
           return (
             <img
-              key={item}
               className="chat-message-content-emoji-big"
               src={emojis[emojiName]}
+              key={index}
             ></img>
           );
         }
 
         return (
           <img
-            key={item}
             className="chat-message-content-emoji"
             src={emojis[emojiName]}
+            key={index}
           ></img>
         );
       } else {
         return (
-          <div className="chat-message-content-text" key={item}>
+          <div className="chat-message-content-text" key={index}>
             {item}
           </div>
         );
       }
     } else {
       return (
-        <div className="chat-message-content-text" key={item}>
+        <div className="chat-message-content-text" key={index}>
           {item}
         </div>
       );
@@ -165,12 +165,12 @@ const MessageDisplay = ({
           </p>
         )}
 
-        <pre className="chat-message-content">
+        <div className="chat-message-content">
           <pre className="chat-message-content" ref={contentRef}>
             {styledContent}
           </pre>
           {message.isEdited && <p className="chat-message-edited"> (edited)</p>}
-        </pre>
+        </div>
       </div>
 
       {isEditing && (
