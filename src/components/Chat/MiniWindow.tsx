@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
+import { forwardRef, useRef } from "react";
 import "../../App.css";
 import ChatInputRef from "../../types/ChatInputRef";
 import ChatMessageObject from "../../types/ChatMessageObject";
@@ -9,6 +9,7 @@ type ChatWindowProps = {
   messages: ChatMessageObject[];
   sendMessage: (contentText: string) => void;
   clientUserUUID: string;
+  profileUUID: string;
 };
 
 type MessagesRef = {
@@ -19,7 +20,7 @@ const MiniWindow = forwardRef<MessagesRef, ChatWindowProps>((props, ref) => {
   // Wrap the component with forwardRef so the parent can pass a ref;  useImperativeHandle exposes methods to that ref
   const chatInputRef = useRef<ChatInputRef>(null);
   const messagesRef = useRef<MessagesRef>(null);
-  
+
   const handleSent = () => {
     if (!chatInputRef) return;
     const value = chatInputRef.current?.getInputValueToSend();
@@ -29,11 +30,12 @@ const MiniWindow = forwardRef<MessagesRef, ChatWindowProps>((props, ref) => {
 
   return (
     <div id="chatUsersPanelContainer" className="chat-mini-window">
-      <Messages messages={props.messages}
-                sendMessage={props.sendMessage}
-                clientUserUUID={props.clientUserUUID}
-                ref={messagesRef}
-                ></Messages>
+      <Messages
+        messages={props.messages}
+        sendMessage={props.sendMessage}
+        ref={messagesRef}
+        profileUUID={props.profileUUID}
+      ></Messages>
       <ChatInput onSend={handleSent} ref={chatInputRef}></ChatInput>
     </div>
   );

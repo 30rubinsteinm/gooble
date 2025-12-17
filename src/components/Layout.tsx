@@ -2,10 +2,10 @@ import type { Session } from "@supabase/supabase-js";
 import { FC, ReactNode } from "react";
 import { Outlet, useLocation } from "react-router";
 import "../App.css";
-import ChatUsersPanel from "./Chat/Users/UsersPanel";
 import TopBar from "../components/Profile/TopBar";
 import SwitcherPanel from "../components/SwitcherPanel";
 import UserProfile from "../types/UserProfileObject";
+import ChatUsersPanel from "./Chat/Users/UsersPanel";
 
 interface LayoutProps {
   session: Session | null;
@@ -15,7 +15,13 @@ interface LayoutProps {
   maxUsers: number;
 }
 
-const App: FC<LayoutProps> = ({ session, profileObject, chatWindow, usersList, maxUsers }) => {
+const App: FC<LayoutProps> = ({
+  session,
+  profileObject,
+  chatWindow,
+  usersList,
+  maxUsers,
+}) => {
   const location = useLocation();
 
   return (
@@ -24,7 +30,10 @@ const App: FC<LayoutProps> = ({ session, profileObject, chatWindow, usersList, m
       <SwitcherPanel></SwitcherPanel>
       <Outlet></Outlet>
       {location.pathname == "/" ? (
-        <ChatUsersPanel activeUsers={usersList} maxUsers={maxUsers}></ChatUsersPanel>
+        <ChatUsersPanel
+          activeUsers={usersList}
+          maxUsers={maxUsers}
+        ></ChatUsersPanel>
       ) : (
         chatWindow
       )}

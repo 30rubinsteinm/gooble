@@ -13,7 +13,7 @@ import MessageDisplay from "./Message";
 type ChatWindowProps = {
   messages: ChatMessageObject[];
   sendMessage: (contentText: string) => void;
-  clientUserUUID: string;
+  profileUUID: string;
 };
 
 type ChatWindowRef = {
@@ -81,7 +81,7 @@ const Messages = forwardRef<ChatWindowRef, ChatWindowProps>((props, ref) => {
   useEffect(() => {
     if (props.messages.length == 0) return;
     if (
-      props.messages[props.messages.length - 1].userUUID == props.clientUserUUID
+      props.messages[props.messages.length - 1].userUUID == props.profileUUID
     ) {
       scrollToBottom();
     }
@@ -127,6 +127,7 @@ const Messages = forwardRef<ChatWindowRef, ChatWindowProps>((props, ref) => {
             showAvatar={showAvatar}
             showSpacer={showSpacer}
             key={index}
+            profileUUID={props.profileUUID}
           ></MessageDisplay>
         );
       })}

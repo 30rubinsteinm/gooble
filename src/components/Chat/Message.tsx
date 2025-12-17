@@ -15,10 +15,12 @@ const MessageDisplay = ({
   message,
   showAvatar,
   showSpacer,
+  profileUUID,
 }: {
   message: ChatMessage;
   showAvatar: boolean;
   showSpacer: boolean;
+  profileUUID: string;
 }) => {
   const [showHover, setShowHover] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -168,6 +170,7 @@ const MessageDisplay = ({
           {styledContent}
         </pre>
       </div>
+
       {isEditing && (
         <div className="editing-hover-div">
           <button className="hover-button" onClick={finishEdit}>
@@ -180,9 +183,11 @@ const MessageDisplay = ({
       )}
       {!isEditing && showHover && (
         <div className="hover-div">
-          <button className="hover-button" onClick={editClicked}>
-            Edit
-          </button>
+          {profileUUID == message.userUUID && (
+            <button className="hover-button" onClick={editClicked}>
+              Edit
+            </button>
+          )}
           {/* <button className="hover-button" onClick={replyClicked}>
             Reply
           </button>

@@ -8,7 +8,7 @@ import Messages from "./Messages";
 type ChatWindowProps = {
   messages: ChatMessageObject[];
   sendMessage: (contentText: string) => void;
-  clientUserUUID: string;
+  profileUUID: string;
 };
 
 type MessagesRef = {
@@ -32,7 +32,7 @@ const ChatWindow = forwardRef<MessagesRef, ChatWindowProps>((props, ref) => {
       <Messages
         messages={props.messages}
         sendMessage={props.sendMessage}
-        clientUserUUID={props.clientUserUUID}
+        profileUUID={props.profileUUID}
         ref={messagesRef}
       ></Messages>
       <ChatInput onSend={handleSent} ref={chatInputRef}></ChatInput>

@@ -158,9 +158,16 @@ const App = () => {
       socket.on("new active user", onAddActiveUser);
       socket.on("remove active user", onRemoveActiveUser);
 
-      if (!socket.connected) {
+      if ((!isAuthLoading && session) || !import.meta.env.PROD) {
         socket.auth = { token: session?.access_token };
-        socket.connect();
+
+        if (!socket.connected) {
+          socket.connect();
+        }
+      } else if (!isAuthLoading && !session) {
+        if (socket.connected) {
+          socket.disconnect();
+        }
       }
     } else {
       console.log("Not logged in or not finished loading!");
@@ -176,10 +183,6 @@ const App = () => {
       socket.off("receive active users", onActiveUsersRequestReceived);
       socket.off("new active user", onAddActiveUser);
       socket.off("remove active user", onRemoveActiveUser);
-
-      if (socket.connected) {
-        socket.disconnect();
-      }
     };
   }, [session, isAuthLoading]);
 
@@ -220,9 +223,9 @@ const App = () => {
         newIsEdited: false,
       });
 
-      // addNewInput(input);
+      addNewInput(input);
 
-      socket.emit("message sent", input);
+      // socket.emit("message sent", input);
       return;
     }
 
@@ -308,6 +311,9 @@ const App = () => {
             retrieveRecentMessages();
             retrieveActiveUsers();
           } else if (_event == "TOKEN_REFRESHED") {
+            socket.auth = { token: session?.access_token };
+            socket.disconnect();
+            socket.connect();
             retrieveUserData(session);
             retrieveActiveUsers();
           }
@@ -339,6 +345,7 @@ const App = () => {
                 messages={messages}
                 sendMessage={handleMessageSent}
                 clientUserUUID={profile.userUUID}
+                profileUUID={profile.userUUID}
               ></MiniWindow>
             )
           }
@@ -354,7 +361,7 @@ const App = () => {
             <ChatWindow
               messages={messages}
               sendMessage={handleMessageSent}
-              clientUserUUID={profile.userUUID}
+              profileUUID={profile.userUUID}
             ></ChatWindow>
           ) : (
             <ChatLoggedOutWindow></ChatLoggedOutWindow>
