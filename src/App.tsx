@@ -131,14 +131,8 @@ const App = () => {
         );
         if (messageIndex != -1) {
           const newMessages = prevMessages.slice();
-          newMessages[messageIndex] = createChatObject({
-            newUserDisplayName: prevMessages[messageIndex].userDisplayName,
-            newMessageContent: messageContent,
-            newUserProfilePicture:
-              prevMessages[messageIndex].userProfilePicture,
-            newUserUUID: prevMessages[messageIndex].userUUID,
-            newIsEdited: true,
-          });
+          newMessages[messageIndex].isEdited = true;
+          newMessages[messageIndex].messageContent = messageContent;
 
           return newMessages;
         } else {
@@ -217,7 +211,7 @@ const App = () => {
     if (!import.meta.env.PROD && !session?.user.id) {
       let input = createChatObject({
         newUserDisplayName: "Test User",
-        newUserUUID: Date.now().toString(),
+        newUserUUID: "1",
         newUserProfilePicture: null,
         newMessageContent: contentText,
         newIsEdited: false,
