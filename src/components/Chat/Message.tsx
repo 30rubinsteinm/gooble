@@ -38,7 +38,7 @@ const MessageDisplay = ({
     /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
   const urlTestRegex = /^(https?|ftp|file):\/\//i;
 
-  var emojiRegex = /(:[^:]+:)/;
+  var emojiRegex = /(:[a-zA-Z0-9_]+:)/;
   if (!message.messageContent && message.messageContent != "") return null;
   let splitContent = message.messageContent.split(emojiRegex);
 
@@ -64,11 +64,27 @@ const MessageDisplay = ({
           ></img>
         );
       } else {
-        return (
-          <div className="chat-message-content-text" key={index}>
-            {item}
-          </div>
-        );
+        const splitItem = item.split(urlSplitRegex);
+        return splitItem.map((itemItem, indexIndex) => {
+          if (urlTestRegex.test(itemItem)) {
+            return (
+              <Link
+                className="chat-message-content-text"
+                key={indexIndex}
+                to={`/extras/search/?q=${itemItem}`}
+                viewTransition={true}
+              >
+                {itemItem}
+              </Link>
+            );
+          } else {
+            return (
+              <div className="chat-message-content-text" key={indexIndex}>
+                {itemItem}
+              </div>
+            );
+          }
+        });
       }
     } else {
       const splitItem = item.split(urlSplitRegex);
