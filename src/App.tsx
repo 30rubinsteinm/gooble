@@ -148,7 +148,7 @@ const App = () => {
         );
         if (messageIndex != -1) {
           const newMessages = prevMessages.slice();
-          delete newMessages[messageIndex];
+          newMessages.splice(messageIndex, 1);
 
           return newMessages;
         } else {

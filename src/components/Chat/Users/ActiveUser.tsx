@@ -13,15 +13,17 @@ const UserDisplay = ({
   clientUserData: UserProfile;
 }) => {
   const clickedUser = () => {
-    if (clientUserData.userRole == "Owner" || !import.meta.env.PROD)
-    {
+    if (clientUserData.userRole == "Owner" || !import.meta.env.PROD) {
       const role = window.prompt("Role name to give?");
       socket.emit("give user role", userData.userUUID, role);
     }
-  }
+  };
 
   return (
-    <button className={isDarkBG ? "user-container-dark" : "user-container-light"} onClick={clickedUser}>
+    <button
+      className={isDarkBG ? "user-container-dark" : "user-container-light"}
+      onClick={clickedUser}
+    >
       <img
         src={userData.userProfilePicture}
         alt=""
